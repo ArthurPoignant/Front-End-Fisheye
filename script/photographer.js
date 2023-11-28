@@ -1,3 +1,6 @@
+const photographer = window.localStorage.getItem("photographe")
+
+
 async function getMedia() {
     // Récupération des pièces depuis le fichier JSON
     const reponse = await fetch("data/photographers.json")
@@ -17,7 +20,7 @@ async function getMedia() {
               <p class="location">${photographerCity},${photographerCountry}</p>
               <p class="tagline">${photographerTagline}</p>
             </div>
-            <button class="contact_button" /*onclick="displayModal()"*/>Contactez-moi</button>
+            <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
               <img class="portrait" src="../assets/photographers/Photographers ID Photos/${photographerPortrait}">
             `
 
