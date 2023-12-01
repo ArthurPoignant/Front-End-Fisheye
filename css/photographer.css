@@ -3,12 +3,15 @@
 }
 
 .photograph-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   background-color: #fafafa;
   height: 300px;
   margin: 0 100px;
+  padding: 50px;
+  margin-bottom: 50px;
 }
 
 .photograph-header .name {
@@ -23,6 +26,8 @@
 .photograph-header .portrait {
   width: 200px;
   height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .photograph-header .location {
@@ -44,14 +49,40 @@
 }
 
 .thumbnail-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 0 100px;
+}
+
+.thumbnail {
+  margin-bottom: 20px;
 }
 
 .thumbnail img {
-  width: 200px;
-  height: 200px;
+  width: 350px;
+  height: 300px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.thumbnail-text {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24px;
+  color: #901C1C;
+  margin-top: -20px;
+}
+
+.thumbnail-likes {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }
 
 .contact_button {
