@@ -4,29 +4,23 @@ async function getPhotographers() {
     let listPhotographes = await model.getListPhotographers()
 
     displayListPhotographe(listPhotographes)
-
-    //let photograph930 = await model.getPhotographerById(930)
-   
-
 }
+getPhotographers()
 
-
-function displayListPhotographe(listPhotographes) {
+function displayListPhotographe(list) {
     // Affichage des photographes  
-    for (let i = 0; i < listPhotographes.length; i++) {
+    for (let i = 0; i < list.length; i++) {
         const cardParents = document.querySelector(".photographer_section")
-        const photographerId = listPhotographes[i].id
-        const photographerName = listPhotographes[i].name
-        const photographerCity = listPhotographes[i].city
-        const photographerCountry = listPhotographes[i].country
-        const photographerPortrait = listPhotographes[i].portrait
-        const photographerPrice = listPhotographes[i].price
-        const photographerTagline = listPhotographes[i].tagline
-        const photographer = JSON.stringify(photographerId)
-        const a = document.querySelector("a")
+        const photographerId = list[i].id
+        const photographerName = list[i].name
+        const photographerCity = list[i].city
+        const photographerCountry = list[i].country
+        const photographerPortrait = list[i].portrait
+        const photographerPrice = list[i].price
+        const photographerTagline = list[i].tagline
 
         cardParents.innerHTML += `
-            <a href="photographer.html" onclick="displayPhotographerPage(${photographerId})">
+            <a href="photographer.html" onclick="setPhotographer(${photographerId})">
             <article class="card">
               <img src="../assets/photographers/Photographers ID Photos/${photographerPortrait}">
               <h2>${photographerName}</h2>
@@ -37,7 +31,8 @@ function displayListPhotographe(listPhotographes) {
             </a>
             `
     }
-    
 }
 
-getPhotographers()
+function setPhotographer(id) {
+    localStorage.setItem("photographerToDisplay", id)
+}

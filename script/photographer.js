@@ -1,15 +1,14 @@
 async function getMedia() {
   let model = new Model()
   let listMedias = await model.getListMedias()
-  let photographer = await model.getPhotographerById(243)
-  displayHeader(photographer)
+  let photographer = await model.getPhotographerById(localStorage.getItem("photographerToDisplay"))
 
+  displayHeader(photographer)
   displayThumbnail(listMedias, photographer)
 }
 getMedia()
 
 function displayHeader(photographer) {
-  console.log(photographer.name)
   const header = document.querySelector(".photograph-header")
   const photographerName = photographer.name
   const photographerCity = photographer.city
@@ -28,7 +27,6 @@ function displayHeader(photographer) {
   `
 
 }
-
 
 function displayThumbnail(listMedias, photographer) {
   for (let i = 0; i < listMedias.length; i++) {
@@ -61,10 +59,6 @@ function displayThumbnail(listMedias, photographer) {
           </div>
           </div>
           `
-      console.log(photographerName, mediaImage)
     }
-    console.log(photographerNameArray)
-
-
   }
 }
