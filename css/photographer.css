@@ -1,5 +1,14 @@
 #contact_modal {
   display: none;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .photograph-header {
@@ -58,9 +67,11 @@
 
 .thumbnail {
   margin-bottom: 20px;
+  width: 350px;
+  /*max-width: 30%;*/
 }
 
-.thumbnail img {
+.thumbnail img,video {
   width: 350px;
   height: 300px;
   border-radius: 5px;
@@ -71,7 +82,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
   font-size: 24px;
   color: #901C1C;
   margin-top: -20px;
@@ -96,6 +107,7 @@
   background-color: #901c1c;
   border-radius: 5px;
   cursor: pointer;
+  margin-bottom: 28px;
 }
 
 .modal {
@@ -105,9 +117,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 35px;
   margin: auto;
+  margin-top: 100px;
+  height: 900px;
 }
 
 .modal header {
@@ -117,6 +131,7 @@
 
 .modal header img {
   cursor: pointer;
+  font-size: 64px;
 }
 
 .modal header h2 {
@@ -128,6 +143,7 @@
 form {
   display: flex;
   width: 100%;
+  height: 80%;
   flex-direction: column;
   align-items: flex-start;
 }
@@ -137,6 +153,7 @@ form label {
   font-size: 36px;
 }
 
+form .input_container,
 form div {
   display: flex;
   flex-direction: column;
@@ -150,4 +167,126 @@ form input {
   height: 68px;
   border: none;
   border-radius: 5px;
+}
+
+#firstname, #lastname, #email {
+  height: 68px;
+}
+
+#message {
+  height: 170px;
+}
+
+#error-msg {
+  color: red;
+  margin: 0;
+  padding: 0;
+}
+
+#lightbox {
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  background-color: white;
+}
+
+/*#lightbox_img {
+  width: 600px;
+  height: 200px;
+  object-fit:cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}*/
+
+#lightbox img, #lightbox video {
+  width: 600px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  object-fit:cover;
+
+  
+}
+
+#lightbox_maincontainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#lightbox .closeButton {
+  position: fixed;
+  z-index: 2;
+  top: 20px;
+  right: 20px;
+}
+
+.arrow-right,.arrow-left,.closeButton {
+  font-size: 35px;
+}
+
+.filter_section {
+  display: flex;
+  flex-direction: row;
+  justify-content: baseline;
+  align-items: baseline;
+  gap: 20px;
+  margin: 0 100px;
+}
+
+.filter_element {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  background-color: #901C1C;
+  margin: 0;
+  padding: 5px;
+  width: 100px;
+}
+
+.filter_line {
+  padding: 0;
+  margin: 0;
+  border: 1px white solid;
+}
+
+.filter_dropdown {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.filter_listmenu:hover .filter_dropdown {
+  display: block;
+}
+
+.displayLikes {
+  width: 376px;
+  height: 62px;
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content:space-around;
+  align-items: center;
+  position: sticky;
+  z-index: 10;
+  bottom: 0;
+  left: 70%;
+  background-color: #DB8876;
+  color: black;
+  font-size: 24px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }

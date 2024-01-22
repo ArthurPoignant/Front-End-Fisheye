@@ -28,6 +28,7 @@ h1 {
   grid-template-columns: 1fr 1fr 1fr;
   gap: 70px;
   margin-top: 100px;
+  margin-bottom: 100px;
 }
 
 .photographer_section article {
@@ -41,6 +42,8 @@ h1 {
 .photographer_section article h2 {
   color: #d3573c;
   font-size: 36px;
+  margin: 0;
+  margin-top: 10px;
 }
 
 .photographer_section article img {
@@ -58,6 +61,7 @@ h1 {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  margin: 0;
 }
 .photographer_section article .tagline {
   color: #000;
@@ -67,6 +71,7 @@ h1 {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  margin: 5px;
 }
 .photographer_section article .price {
   color: #757575;
@@ -76,6 +81,7 @@ h1 {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  margin: 0;
 }
 
 a {

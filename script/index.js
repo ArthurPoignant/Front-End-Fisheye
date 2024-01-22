@@ -18,13 +18,14 @@ function displayListPhotographe(list) {
         const photographerPortrait = list[i].portrait
         const photographerPrice = list[i].price
         const photographerTagline = list[i].tagline
+        const tabindex = i
 
         cardParents.innerHTML += `
             <a href="photographer.html" onclick="setPhotographer(${photographerId})">
-            <article class="card">
-              <img src="../assets/photographers/Photographers ID Photos/${photographerPortrait}">
+            <article tabindex="${tabindex}" class="card">
+              <img src="../assets/photographers/Photographers ID Photos/${photographerPortrait}" alt="${photographerName} portrait">
               <h2>${photographerName}</h2>
-              <p class="location">${photographerCity},${photographerCountry}</p>
+              <p class="location">${photographerCity}, ${photographerCountry}</p>
               <p class="tagline">${photographerTagline}</p>
               <p class="price">${photographerPrice}€/jour</p>
             </article>
@@ -36,3 +37,4 @@ function displayListPhotographe(list) {
 function setPhotographer(id) {
     localStorage.setItem("photographerToDisplay", id)
 }
+
