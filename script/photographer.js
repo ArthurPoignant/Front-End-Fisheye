@@ -1,14 +1,10 @@
-async function getMedia() {
-  const model = new Model();
+/* eslint-disable import/extensions */
+import Model from './Model.js';
 
-  const photographer = await model.getPhotographerById(localStorage.getItem('photographerToDisplay'));
-  const listMedias = await model.getListMedias();
-
-  displayHeader(photographer);
-  const listDefault = listMedias.filter((media) => media.photographerId === photographer.id);
-  displayThumbnail(listDefault, photographer);
-  sortThumbnail(listDefault, photographer);
-  infoDisplay(photographer.price);
+function getUrlParams() {
+  const params = new URLSearchParams(document.location.search);
+  const idParams = params.get('id');
+  return idParams;
 }
 
 function displayHeader(photographer) {
@@ -24,9 +20,12 @@ function displayHeader(photographer) {
     <p class="location">${photographerCity}, ${photographerCountry}</p>
     <p class="tagline">${photographerTagline}</p>
   </div>
-  <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+  <button class="contact_button">Contactez-moi</button>
     <img class="portrait" alt="${photographerName} portrait" src="../assets/photographers/Photographers ID Photos/${photographerPortrait}">
   `;
+  document.querySelector('.contact_button').addEventListener('click', () => {
+    displayModal();// eslint-disable-line
+  });
 }
 
 function mediaFactory(media, photographerName) {
@@ -46,6 +45,38 @@ function mediaFactory(media, photographerName) {
   return mediaElement;
 }
 
+function infoDisplay(price) {
+  const likeData = document.querySelectorAll('.thumbnail-likes p');
+  let likeTotal = 0;
+
+  for (let i = 0; i < likeData.length; i += 1) {
+    likeTotal += parseInt(likeData[i].textContent, 10);
+  }
+
+  const likeDisplayer = document.getElementsByClassName('displayLikes');
+
+  if (likeDisplayer.length === 0) {
+    const likeDisplayerDiv = document.createElement('div');
+    document.querySelector('main').appendChild(likeDisplayerDiv);
+    likeDisplayerDiv.classList.add('displayLikes');
+    likeDisplayerDiv.innerHTML = `
+  <p class='displayLikes_likes'>
+  ${likeTotal}
+  <i class="fa-solid fa-heart displayLikes_icon"></i>
+  </p>
+  <p>${price}€/jour</p>
+  `;
+  } else {
+    const total = document.querySelector('.displayLikes_likes');
+    total.innerHTML = `
+    <p class='displayLikes_likes'>
+    ${likeTotal}
+    <i class="fa-solid fa-heart displayLikes_icon"></i>
+    </p>
+    `;
+  }
+}
+
 function displayThumbnail(listDefault, photographer) {
   for (let i = 0; i < listDefault.length; i += 1) {
     const thumbnailcontainer = document.querySelector('.thumbnail-container');
@@ -60,7 +91,7 @@ function displayThumbnail(listDefault, photographer) {
     article.classList.add('thumbnail');
 
     const mediaElement = mediaFactory(listDefault[i], photographerName);
-    mediaElement.addEventListener('click', () => displayLightbox(listDefault, tabindex, photographerName));
+    mediaElement.addEventListener('click', () => displayLightbox(listDefault, tabindex, photographerName));// eslint-disable-line
     article.append(mediaElement);
 
     const containerDetail = document.createElement('div');
@@ -122,38 +153,6 @@ function sortThumbnail(listMedias, photographer) {
   });
 }
 
-function infoDisplay(price) {
-  const likeData = document.querySelectorAll('.thumbnail-likes p');
-  let likeTotal = 0;
-
-  for (let i = 0; i < likeData.length; i += 1) {
-    likeTotal += parseInt(likeData[i].textContent, 10);
-  }
-
-  const likeDisplayer = document.getElementsByClassName('displayLikes');
-
-  if (likeDisplayer.length === 0) {
-    const likeDisplayerDiv = document.createElement('div');
-    document.querySelector('main').appendChild(likeDisplayerDiv);
-    likeDisplayerDiv.classList.add('displayLikes');
-    likeDisplayerDiv.innerHTML = `
-  <p class='displayLikes_likes'>
-  ${likeTotal}
-  <i class="fa-solid fa-heart displayLikes_icon"></i>
-  </p>
-  <p>${price}€/jour</p>
-  `;
-  } else {
-    const total = document.querySelector('.displayLikes_likes');
-    total.innerHTML = `
-    <p class='displayLikes_likes'>
-    ${likeTotal}
-    <i class="fa-solid fa-heart displayLikes_icon"></i>
-    </p>
-    `;
-  }
-}
-
 function prevMedia(i, list) {
   let newListIndex = i - 1;
   if (newListIndex < 0) {
@@ -180,57 +179,15 @@ function checkMedia(media, photographerName) {
   return source;
 }
 
-function displayLightbox(list, listID, photographerName) {
-  let i = listID;
-  let source = checkMedia(list[i], photographerName);
-
-  let titre = list[i].title;
-  const leftArrow = document.getElementById('arrow-left');
-  leftArrow.addEventListener('click', () => {
-    i = prevMedia(i, list);
-    source = checkMedia(list[i], photographerName);
-    titre = list[i].title;
-    lightboxData(source, titre);
-  });
-
-  const rightArrow = document.getElementById('arrow-right');
-  rightArrow.addEventListener('click', () => {
-    i = nextMedia(i, list);
-    source = checkMedia(list[i], photographerName);
-    titre = list[i].title;
-    lightboxData(source, titre);
-  });
-
-  document.onkeydown = (e) => {
-    if (e.keyCode === 37) {
-      i = prevMedia(i, list);
-      source = checkMedia(list[i], photographerName);
-      titre = list[i].title;
-      lightboxData(source, titre);
-    } else if (e.keyCode === 39) {
-      i = nextMedia(i, list);
-      source = checkMedia(list[i], photographerName);
-      titre = list[i].title;
-      lightboxData(source, titre);
-    }
-  };
-
-  document.getElementById('lightbox').style.display = 'flex';
-  lightboxData(source, titre);
-}
-
-function closeLightbox() {
-  document.getElementById('lightbox').style.display = 'none';
-}
-
-function lightboxData(source, titre) {
+function mediaFormatHandler(source, titre) {
   const lightboxImg = document.getElementById('lightbox_img');
   const lightboxTitle = document.getElementById('lightbox_mediaTitle');
   const image = document.getElementById('imageToDisplay');
   const title = document.getElementById('titleToDisplay');
   const video = document.getElementById('videoToDisplay');
+  const sourceFormat = source.split('.').pop();
 
-  if (source.includes('mp4') === true) {
+  if (sourceFormat === 'mp4') {
     if (image !== null) {
       image.remove();
     }
@@ -239,13 +196,14 @@ function lightboxData(source, titre) {
       videoToAppend.id = 'videoToDisplay';
       videoToAppend.src = source;
       videoToAppend.autoplay = true;
+      videoToAppend.controls = true;
       lightboxImg.append(videoToAppend);
     } else {
       video.src = source;
     }
   }
 
-  if (source.includes('jpg') === true) {
+  if (sourceFormat === 'jpg') {
     if (video !== null) {
       video.remove();
     }
@@ -269,6 +227,49 @@ function lightboxData(source, titre) {
   }
 }
 
+function displayLightbox(list, listID, photographerName) {
+  let i = listID;
+  let source = checkMedia(list[i], photographerName);
+
+  let titre = list[i].title;
+  const leftArrow = document.getElementById('arrow-left');
+  leftArrow.addEventListener('click', () => {
+    i = prevMedia(i, list);
+    source = checkMedia(list[i], photographerName);
+    titre = list[i].title;
+    mediaFormatHandler(source, titre);
+  });
+
+  const rightArrow = document.getElementById('arrow-right');
+  rightArrow.addEventListener('click', () => {
+    i = nextMedia(i, list);
+    source = checkMedia(list[i], photographerName);
+    titre = list[i].title;
+    mediaFormatHandler(source, titre);
+  });
+
+  document.onkeydown = (e) => {
+    if (e.code === 'ArrowLeft') {
+      i = prevMedia(i, list);
+      source = checkMedia(list[i], photographerName);
+      titre = list[i].title;
+      mediaFormatHandler(source, titre);
+    } else if (e.code === 'ArrowRight') {
+      i = nextMedia(i, list);
+      source = checkMedia(list[i], photographerName);
+      titre = list[i].title;
+      mediaFormatHandler(source, titre);
+    }
+  };
+
+  document.getElementById('lightbox').style.display = 'flex';
+  mediaFormatHandler(source, titre);
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').style.display = 'none';
+}
+
 function displayModal() {
   document.getElementById('contact_modal').style.display = 'flex';
 }
@@ -277,16 +278,11 @@ function closeModal() {
   document.getElementById('contact_modal').style.display = 'none';
 }
 
-//  prevent form from refreshing the page
-document.querySelector('form').addEventListener('submit', (event) => {
-  event.preventDefault();
-});
-
 function getModalData() {
   const firstnameData = document.getElementById('firstname').value;
   const lastnameData = document.getElementById('lastname').value;
   const emailData = document.getElementById('email').value;
-  const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;// eslint-disable-line
   const messageData = document.getElementById('message').value;
   let validateForm = 0;
 
@@ -367,7 +363,7 @@ function getModalData() {
   }
 
   // Display form data in console
-  console.log(`Prenom: ${firstnameData}, Nom: ${lastnameData}, Email: ${emailData}, Message: ${messageData}`);
+  console.log(`Prenom: ${firstnameData}, Nom: ${lastnameData}, Email: ${emailData}, Message: ${messageData}`);// eslint-disable-line
 
   // Close modal after test completed
   if (validateForm === 4) {
@@ -375,4 +371,35 @@ function getModalData() {
   }
 }
 
+async function getMedia() {
+  const model = new Model();
+
+  const photographerId = getUrlParams();
+  const photographer = await model.getPhotographerById(photographerId);
+  const listMedias = await model.getListMedias();
+
+  displayHeader(photographer);
+  const listDefault = listMedias.filter((media) => media.photographerId === photographer.id);
+  displayThumbnail(listDefault, photographer);
+  sortThumbnail(listDefault, photographer);
+  infoDisplay(photographer.price);
+}
+
 getMedia();
+
+//  Event listeners
+document.querySelector('form').addEventListener('submit', (event) => {
+  event.preventDefault();
+});
+
+document.querySelector('form').addEventListener('submit', () => {
+  getModalData();
+});
+
+document.querySelector('.modal img').addEventListener('click', () => {
+  closeModal();
+});
+
+document.querySelector('.closeButton').addEventListener('click', () => {
+  closeLightbox();
+});

@@ -1,15 +1,13 @@
-async function getPhotographers() {
-// Récupération des pièces depuis le fichier JSON
-  const model = new Model();
-  const listPhotographes = await model.getListPhotographers();
+/* eslint-disable import/extensions */
+import Model from './Model.js';
 
-  displayListPhotographe(listPhotographes);
+function setPhotographer(id) {
+  localStorage.setItem('photographerToDisplay', id);
 }
-getPhotographers();
 
 function displayListPhotographe(list) {
 // Affichage des photographes;
-  for (let i = 0; i < list.length; i++) {
+  for (let i = 0; i < list.length; i += 1) {
     const cardParents = document.querySelector('.photographer_section');
     const photographerId = list[i].id;
     const photographerName = list[i].name;
@@ -19,9 +17,10 @@ function displayListPhotographe(list) {
     const photographerPrice = list[i].price;
     const photographerTagline = list[i].tagline;
     const tabindex = i;
+    console.log(photographerId);
 
     cardParents.innerHTML += `
-            <a href="photographer.html" onclick="setPhotographer(${photographerId})">
+            <a href="photographer.html?id=${photographerId}" class="photographer-link">
             <article tabindex="${tabindex}" class="card">
               <img src="../assets/photographers/Photographers ID Photos/${photographerPortrait}" alt="${photographerName} portrait">
               <h2>${photographerName}</h2>
@@ -31,9 +30,16 @@ function displayListPhotographe(list) {
             </article>
             </a>
             `;
+    cardParents.querySelector('.photographer-link').addEventListener('click', () => {
+      setPhotographer(photographerId);
+    });
   }
 }
 
-function setPhotographer(id) {
-  localStorage.setItem('photographerToDisplay', id);
+async function getPhotographers() {
+  // Récupération des pièces depuis le fichier JSON
+  const model = new Model();
+  const listPhotographes = await model.getListPhotographers();
+  displayListPhotographe(listPhotographes);
 }
+getPhotographers();

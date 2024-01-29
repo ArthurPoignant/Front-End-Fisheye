@@ -16,17 +16,16 @@
       referrerpolicy="no-referrer"
     />
     <title>Fisheye - photographe</title>
-    <script src="./script/Model.js" defer></script>
-    <script src="./script/photographer.js" defer></script>
+    <script src="./script/photographer.js" type="module" defer></script>
   </head>
   <body>
     <header>
       <a href="index.html">
         <img
-        src="assets/images/logo.png"
-        class="logo"
-        aria-label="fisheye logo"
-      />
+          src="assets/images/logo.png"
+          class="logo"
+          aria-label="fisheye logo"
+        />
       </a>
     </header>
     <main id="main">
@@ -37,11 +36,14 @@
       <section class="filter_section" aria-label="filter section">
         <p>Trier par</p>
         <div class="filter_listmenu">
-          <p class="filter_element popularity-filter">Popularité <i class="fa-solid fa-chevron-down"></i></p>
+          <p class="filter_element popularity-filter">
+            Popularité <i class="fa-solid fa-chevron-down arrow-down"></i
+            ><i class="fa-solid fa-chevron-up arrow-up"></i>
+          </p>
           <div class="filter_dropdown">
-            <p class="filter_line"></p>
+            <div id="borderBottom"></div>
             <p class="filter_element date-filter">Date</p>
-            <p class="filter_line"></p>
+            <div id="borderBottom"></div>
             <p class="filter_element alphabetical-filter">Titre</p>
           </div>
         </div>
@@ -57,13 +59,11 @@
           <h2>Contactez-moi</h2>
           <img
             src="assets/icons/close.svg"
-            onclick="closeModal()"
             aria-label="close"
           />
         </header>
         <form
           method="get"
-          onsubmit="getModalData()"
           novalidate
           action="photographer.html"
         >
@@ -105,7 +105,7 @@
         <div id="lightbox_rightside">
           <i id="arrow-right" class="fa-solid fa-chevron-right arrow-right"></i>
         </div>
-        <i class="fa-solid fa-xmark closeButton" onclick="closeLightbox()"></i>
+        <i class="fa-solid fa-xmark closeButton"></i>
       </div>
       <div id="lightbox_mediaTitle"></div>
     </div>
