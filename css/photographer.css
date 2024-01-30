@@ -219,17 +219,32 @@ form input {
   align-items: center;
 }
 
-#lightbox .closeButton {
-  position: fixed;
+#lightbox_rightside {
+  position: relative;
+}
+
+#lightbox .arrow-right, .closeButton {
+  position: absolute;
   z-index: 2;
-  top: 20px;
-  right: 20px;
+}
+
+.closeButton {
+  top: -250px;
 }
 
 .arrow-right,
 .arrow-left,
 .closeButton {
   font-size: 35px;
+  color: #901c1c;
+}
+
+#titleToDisplay {
+  width: 600px;
+  margin: auto;
+  color: #901c1c;
+  margin-left: 20px;
+  margin-top: 10px;
 }
 
 .filter_section {

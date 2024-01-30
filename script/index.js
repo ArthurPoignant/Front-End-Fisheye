@@ -17,7 +17,6 @@ function displayListPhotographe(list) {
     const photographerPrice = list[i].price;
     const photographerTagline = list[i].tagline;
     const tabindex = i;
-    console.log(photographerId);
 
     cardParents.innerHTML += `
             <a href="photographer.html?id=${photographerId}" class="photographer-link">
