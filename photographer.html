@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="assets/favicon.png">
     <link
       href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
       integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
       crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+      referrerpolicy="no-referrer">
     <title>Fisheye - photographe</title>
-    <script src="./script/photographer.js" type="module" defer></script>
+    <script src="./script/photographer.js" type="module"></script>
   </head>
   <body>
     <header>
@@ -25,7 +23,7 @@
           src="assets/images/logo.png"
           class="logo"
           aria-label="fisheye logo"
-        />
+          alt="fisheye-logo">
       </a>
     </header>
     <main id="main">
@@ -41,9 +39,9 @@
             ><i class="fa-solid fa-chevron-up arrow-up"></i>
           </p>
           <div class="filter_dropdown">
-            <div id="borderBottom"></div>
+            <div id="borderBottom-1"></div>
             <p class="filter_element date-filter">Date</p>
-            <div id="borderBottom"></div>
+            <div id="borderBottom-2"></div>
             <p class="filter_element alphabetical-filter">Titre</p>
           </div>
         </div>
@@ -60,7 +58,7 @@
           <img
             src="assets/icons/close.svg"
             aria-label="close"
-          />
+            alt="close-icon">
         </header>
         <form
           method="get"
@@ -70,33 +68,31 @@
           <div class="input_container">
             <div class="firstname_container">
               <label for="firstname">Prénom</label>
-              <input type="text" id="firstname" />
+              <input type="text" id="firstname">
             </div>
             <div class="lastname_container">
               <label for="lastname">Nom</label>
-              <input type="text" id="lastname" />
+              <input type="text" id="lastname">
             </div>
             <div class="email_container">
               <label for="email">Email</label>
-              <input type="text" id="email" />
+              <input type="text" id="email">
             </div>
             <div class="message_container">
               <label for="message">Votre message</label>
-              <input type="text" id="message" />
+              <input type="text" id="message">
             </div>
           </div>
 
           <input
-            class="contact_button btn-submit"
+            class="contact_button btn-submit button"
             type="submit"
-            class="button"
             value="Envoyer"
-            aria-label="send form"
-          />
+            aria-label="send form">
         </form>
       </div>
     </div>
-    <div id="lightbox" aria-label="lightbox">
+    <div id="lightbox">
       <div id="lightbox_maincontainer">
         <div id="lightbox_leftside">
           <i id="arrow-left" class="fa-solid fa-chevron-left arrow-left"></i>
