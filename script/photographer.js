@@ -78,8 +78,12 @@ function infoDisplay(price) {
 }
 
 function displayThumbnail(listDefault, photographer) {
+  const thumbnailContainer = document.querySelector('.thumbnail-container');
+
+  // Clear any previous thumbnails
+  thumbnailContainer.innerHTML = '';
+
   for (let i = 0; i < listDefault.length; i += 1) {
-    const thumbnailcontainer = document.querySelector('.thumbnail-container');
     const mediaTitle = listDefault[i].title;
     const mediaLikes = listDefault[i].likes;
     const photographerNameArray = photographer.name.split(' ');
@@ -87,11 +91,15 @@ function displayThumbnail(listDefault, photographer) {
     const tabindex = i;
 
     const article = document.createElement('article');
-    article.tabIndex = tabindex;
+    article.tabIndex = 0;
     article.classList.add('thumbnail');
 
     const mediaElement = mediaFactory(listDefault[i], photographerName);
     mediaElement.addEventListener('click', () => displayLightbox(listDefault, tabindex, photographerName));// eslint-disable-line
+    article.addEventListener('keydown', (e) => {
+      if (e.code === 'Enter') { displayLightbox(listDefault, tabindex, photographerName); }// eslint-disable-line
+    });
+
     article.append(mediaElement);
 
     const containerDetail = document.createElement('div');
@@ -106,6 +114,7 @@ function displayThumbnail(listDefault, photographer) {
       e.target.parentElement.querySelector('p').textContent = mediaLikes + 1;
       infoDisplay(photographer.price);
     });
+
     const likeNum = document.createElement('p');
     likeNum.textContent = mediaLikes;
 
@@ -120,7 +129,7 @@ function displayThumbnail(listDefault, photographer) {
 
     article.appendChild(containerDetail);
 
-    thumbnailcontainer.append(article);
+    thumbnailContainer.append(article);
   }
 }
 
@@ -402,4 +411,8 @@ document.querySelector('.modal img').addEventListener('click', () => {
 
 document.querySelector('.closeButton').addEventListener('click', () => {
   closeLightbox();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Escape') { closeLightbox(); }// eslint-disable-line
 });
