@@ -16,12 +16,14 @@ function displayHeader(photographer) {
   const photographerTagline = photographer.tagline;
   header.innerHTML += `
   <div class="text">
-    <h2 class="name">${photographerName}</h2>
+    <h2 class="name" tabindex="0">${photographerName}</h2>
+    <div tabindex="0">
     <p class="location">${photographerCity}, ${photographerCountry}</p>
     <p class="tagline">${photographerTagline}</p>
+    </div>
   </div>
-  <button class="contact_button">Contactez-moi</button>
-    <img class="portrait" alt="${photographerName} portrait" src="../assets/photographers/Photographers ID Photos/${photographerPortrait}">
+  <button class="contact_button" tabindex="0">Contactez-moi</button>
+    <img class="portrait" alt="${photographerName} portrait" src="../assets/photographers/Photographers ID Photos/${photographerPortrait}" tabindex="0">
   `;
   document.querySelector('.contact_button').addEventListener('click', () => {
     displayModal();// eslint-disable-line
@@ -53,34 +55,32 @@ function infoDisplay(price) {
     likeTotal += parseInt(likeData[i].textContent, 10);
   }
 
-  const likeDisplayer = document.getElementsByClassName('displayLikes');
+  const likeDisplayer = document.querySelector('.displayLikes');
 
-  if (likeDisplayer.length === 0) {
+  if (!likeDisplayer) {
     const likeDisplayerDiv = document.createElement('div');
-    document.querySelector('main').appendChild(likeDisplayerDiv);
+    document.querySelector('.likeDisplayerDiv').appendChild(likeDisplayerDiv);
     likeDisplayerDiv.classList.add('displayLikes');
     likeDisplayerDiv.innerHTML = `
-  <p class='displayLikes_likes'>
-  ${likeTotal}
-  <i class="fa-solid fa-heart displayLikes_icon"></i>
-  </p>
-  <p>${price}€/jour</p>
-  `;
+      <p class='displayLikes_likes'>
+      ${likeTotal}
+      <i class="fa-solid fa-heart displayLikes_icon"></i>
+      </p>
+      <p>${price}€/jour</p>
+    `;
   } else {
-    const total = document.querySelector('.displayLikes_likes');
-    total.innerHTML = `
-    <p class='displayLikes_likes'>
-    ${likeTotal}
-    <i class="fa-solid fa-heart displayLikes_icon"></i>
-    </p>
+    likeDisplayer.innerHTML = `
+      <p class='displayLikes_likes'>
+      ${likeTotal}
+      <i class="fa-solid fa-heart displayLikes_icon"></i>
+      </p>
+      <p>${price}€/jour</p>
     `;
   }
 }
 
 function displayThumbnail(listDefault, photographer) {
   const thumbnailContainer = document.querySelector('.thumbnail-container');
-
-  // Clear any previous thumbnails
   thumbnailContainer.innerHTML = '';
 
   for (let i = 0; i < listDefault.length; i += 1) {
@@ -91,8 +91,8 @@ function displayThumbnail(listDefault, photographer) {
     const tabindex = i;
 
     const article = document.createElement('article');
-    article.tabIndex = 0;
     article.classList.add('thumbnail');
+    article.tabIndex = 0;
 
     const mediaElement = mediaFactory(listDefault[i], photographerName);
     mediaElement.addEventListener('click', () => displayLightbox(listDefault, tabindex, photographerName));// eslint-disable-line
@@ -107,12 +107,19 @@ function displayThumbnail(listDefault, photographer) {
 
     const paragrapheTitle = document.createElement('h3');
     paragrapheTitle.textContent = mediaTitle;
+    paragrapheTitle.tabIndex = 0;
 
     const likeContainer = document.createElement('div');
+    likeContainer.tabIndex = 0;
     likeContainer.classList.add('thumbnail-likes');
     likeContainer.addEventListener('click', (e) => {
       e.target.parentElement.querySelector('p').textContent = mediaLikes + 1;
       infoDisplay(photographer.price);
+    });
+    likeContainer.addEventListener('keydown', (e) => {
+      if (e.code === 'Escape') {
+        e.target.parentElement.querySelector('p').textContent = mediaLikes + 1;
+        infoDisplay(photographer.price); }// eslint-disable-line
     });
 
     const likeNum = document.createElement('p');
@@ -142,6 +149,13 @@ function sortThumbnail(listMedias, photographer) {
     const newListMedias = listMedias.sort((a, b) => b.likes - a.likes);
     displayThumbnail(newListMedias, photographer);
   });
+  btnPopularity.addEventListener('keydown', (e) => {
+    if (e.code === 'Enter') {
+      e.preventDefault();
+      document.querySelector('.thumbnail-container').innerHTML = '';
+      const newListMedias = listMedias.sort((a, b) => b.likes - a.likes);
+      displayThumbnail(newListMedias, photographer); }// eslint-disable-line
+  });
 
   // sort dates by latest to oldest
   const btnDate = document.querySelector('.date-filter');
@@ -151,6 +165,14 @@ function sortThumbnail(listMedias, photographer) {
     const newListMedias = listMedias.sort((a, b) => b.date.localeCompare(a.date));
     displayThumbnail(newListMedias, photographer);
   });
+  btnDate.addEventListener('keydown', (e) => {
+    if (e.code === 'Enter') {
+      e.preventDefault();
+      document.querySelector('.thumbnail-container').innerHTML = '';
+      const newListMedias = listMedias.sort((a, b) => b.date.localeCompare(a.date));
+      displayThumbnail(newListMedias, photographer);
+    }
+  });
 
   // sort title by alphabetical order
   const btnAlpha = document.querySelector('.alphabetical-filter');
@@ -159,6 +181,14 @@ function sortThumbnail(listMedias, photographer) {
     document.querySelector('.thumbnail-container').innerHTML = '';
     const newListMedias = listMedias.sort((a, b) => a.title.localeCompare(b.title));
     displayThumbnail(newListMedias, photographer);
+  });
+  btnAlpha.addEventListener('keydown', (e) => {
+    if (e.code === 'Enter') {
+      e.preventDefault();
+      document.querySelector('.thumbnail-container').innerHTML = '';
+      const newListMedias = listMedias.sort((a, b) => a.title.localeCompare(b.title));
+      displayThumbnail(newListMedias, photographer);
+    }
   });
 }
 
@@ -415,4 +445,20 @@ document.querySelector('.closeButton').addEventListener('click', () => {
 
 document.addEventListener('keydown', (e) => {
   if (e.code === 'Escape') { closeLightbox(); }// eslint-disable-line
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Escape') { closeModal(); }// eslint-disable-line
+});
+
+document.addEventListener('focusin', () => {
+  const focusedElement = document.activeElement;
+  const additionalContent = document.querySelector('.filter_dropdown');
+
+  if (focusedElement.classList == 'filter_listmenu') {// eslint-disable-line
+    additionalContent.style.display = 'block';
+  }
+  if (focusedElement.classList == 'displayLikes') {// eslint-disable-line
+    additionalContent.style.display = 'none';
+  }
 });

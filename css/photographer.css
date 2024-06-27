@@ -340,6 +340,10 @@ form input {
   display: block;
 }
 
+.filter_listmenu:active .filter_dropdown {
+  display: block;
+}
+
 .displayLikes {
   width: 376px;
   height: 62px;
@@ -348,7 +352,7 @@ form input {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  position: sticky;
+  position: fixed;
   z-index: 2;
   bottom: 0;
   left: 70%;
@@ -358,3 +362,5 @@ form input {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
+
+

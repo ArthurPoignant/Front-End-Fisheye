@@ -18,7 +18,7 @@
   </head>
   <body>
     <header>
-      <a href="index.html">
+      <a href="index.html" tabindex="0">
         <img
           src="assets/images/logo.png"
           class="logo"
@@ -32,19 +32,21 @@
         aria-label="photograph section"
       ></section>
       <section class="filter_section" aria-label="filter section">
-        <p>Trier par</p>
-        <div class="filter_listmenu">
-          <p class="filter_element popularity-filter">
+        <p tabindex="0">Trier par</p>
+        <div class="filter_listmenu" tabindex="0">
+          <p class="filter_element popularity-filter" tabindex="0">
             Popularité <i class="fa-solid fa-chevron-down arrow-down"></i
             ><i class="fa-solid fa-chevron-up arrow-up"></i>
           </p>
           <div class="filter_dropdown">
             <div id="borderBottom-1"></div>
-            <p class="filter_element date-filter">Date</p>
+            <p class="filter_element date-filter" tabindex="0">Date</p>
             <div id="borderBottom-2"></div>
-            <p class="filter_element alphabetical-filter">Titre</p>
+            <p class="filter_element alphabetical-filter" tabindex="0">Titre</p>
           </div>
         </div>
+      </section>
+      <section class="displayLikes" tabindex="0">
       </section>
       <section
         class="thumbnail-container"
@@ -68,19 +70,19 @@
           <div class="input_container">
             <div class="firstname_container">
               <label for="firstname">Prénom</label>
-              <input type="text" id="firstname">
+              <input type="text" id="firstname" tabindex="0">
             </div>
             <div class="lastname_container">
               <label for="lastname">Nom</label>
-              <input type="text" id="lastname">
+              <input type="text" id="lastname" tabindex="0">
             </div>
             <div class="email_container">
               <label for="email">Email</label>
-              <input type="text" id="email">
+              <input type="text" id="email" tabindex="0">
             </div>
             <div class="message_container">
               <label for="message">Votre message</label>
-              <input type="text" id="message">
+              <input type="text" id="message" tabindex="0">
             </div>
           </div>
 
@@ -88,7 +90,8 @@
             class="contact_button btn-submit button"
             type="submit"
             value="Envoyer"
-            aria-label="send form">
+            aria-label="send form"
+            tabindex="0">
         </form>
       </div>
     </div>
